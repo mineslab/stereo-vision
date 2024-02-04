@@ -118,29 +118,37 @@ def stereoCalibrateCamera(camera_c1, camera_c2,camera_name,chessboard_box_size=1
       
     cv2.destroyAllWindows()
     
+    #extract image shape 
+    width= image1.shape[1]
+    height= image1.shape[0]
+
     # Perform camera calibration by
     # passing the value of above found out 3D points (threedpoints)
     # and its corresponding pixel coordinates of the
     # detected corners (twodpoints)
     ret_1, k1, d1, r_1, t_1 = cv2.calibrateCamera(
-        threedpoints, twodpoints_c1,image1.shape[:2], None, None)
+        threedpoints, twodpoints_c1,(width, height), None, None)
 
     ret_2, k2, d2, r_2, t_2 = cv2.calibrateCamera(
-        threedpoints, twodpoints_c2,image2.shape[:2], None, None)
+        threedpoints, twodpoints_c2,(width, height), None, None)
 
-
+    np.savez(camera_name+"c1.npz", k=k1,d=d1,r=r_1,t=t_1)
+    np.savez(camera_name+"c2.npz", k=k2,d=d2,r=r_2,t=t_2)
     
     ret, CM1, dist1, CM2, dist2, R, T, E, F = cv2.stereoCalibrate(threedpoints, twodpoints_c1, twodpoints_c2, k1, d1,
-                                                                 k2, d2, image1.shape[:2], criteria = criteria, flags =   stereocalibration_flags)
+                                                                 k2, d2, (width, height), criteria = criteria, flags =   stereocalibration_flags)
     
     np.savez(camera_name+".npz", k1=k1,d1=d1,k2=k2,d2=d2,SR=R,ST=T)    
         
 
 
-def getCameraParameters(file_name):
+def getStereoCameraParameters(file_name):
     loaded_data = np.load(file_name)
     return loaded_data['k1'], loaded_data['d1'], loaded_data['k2'],loaded_data['d2'], loaded_data['SR'],loaded_data['ST']
 
+def getgetStereoSingleCameraParameters(file_name):
+    loaded_data = np.load(file_name)
+    return loaded_data['k'], loaded_data['d'], loaded_data['r'],loaded_data['t']
 
 
 #customCalibrateCamera(0,'lenovo_web_cam',24)

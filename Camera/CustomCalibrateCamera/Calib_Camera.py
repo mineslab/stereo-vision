@@ -111,15 +111,12 @@ def customCalibrateCamera(camera_device,camera_name,chessboard_box_size=1,chessb
       
     cv2.destroyAllWindows()
     
-    #extract image shape 
-    width= image.shape[1]
-    height= image.shape[0]
     # Perform camera calibration by
     # passing the value of above found out 3D points (threedpoints)
     # and its corresponding pixel coordinates of the
     # detected corners (twodpoints)
     ret, matrix, distortion, r_vecs, t_vecs = cv2.calibrateCamera(
-        threedpoints, twodpoints,(width, height), None, None)
+        threedpoints, twodpoints,image.shape[:2], None, None)
     
     np.savez(camera_name+".npz", K_matrix=matrix, Dist=distortion, r_vecs=r_vecs, t_vecs=t_vecs)    
         
