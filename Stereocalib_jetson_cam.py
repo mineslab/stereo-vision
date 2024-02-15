@@ -25,7 +25,7 @@ cam2.open(sensor_id=0,
 
 cam1.start()
 cam2.start()
-#stereoCalibrateCamera(cam1,cam2,'CustomCalibrateCamera/jetson_stereo_8MP',24)
+stereoCalibrateCamera(cam1,cam2,'CustomCalibrateCamera/jetson_stereo_8MP',24)
 lod_data = getStereoCameraParameters('CustomCalibrateCamera/jetson_stereo_8MP.npz')
 lod_datac1 = getgetStereoSingleCameraParameters('CustomCalibrateCamera/jetson_stereo_8MPc1.npz')
 lod_datac2 = getgetStereoSingleCameraParameters('CustomCalibrateCamera/jetson_stereo_8MPc2.npz')
@@ -40,7 +40,8 @@ T =  lod_data[5]
 #print camera matrix
 print(lod_datac1[0])
 print(lod_datac2[0])
-
+print(lod_datac1[1])
+print(lod_datac2[1])
 
 
 cv2.destroyAllWindows()

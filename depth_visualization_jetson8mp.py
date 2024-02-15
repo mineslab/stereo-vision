@@ -5,6 +5,22 @@ from CustomCalibrateCamera.Stereo_Calib_Camera import stereoCalibrateCamera
 from CustomCalibrateCamera.Stereo_Calib_Camera import getStereoCameraParameters
 
 import Camera.jetsonCam as jetCam
+
+def draw_box(img,box):
+   return cv2.rectangle(img,(box[0],box[1]) ,( box[0]+box[2], box[1]+box[3]), (255,0,0),2)
+
+
+def get_combined_roi(roi1,roi2):
+    x = min(roi1[0],roi2[0]) 
+    y = min(roi1[1],roi2[1])
+    w = max(roi1[2],roi2[2])
+    h = max(roi1[3],roi2[3])
+    return(x,y,w,h)
+
+def crop_image(roi,img):
+   return img[roi[0]:roi[0]+roi[2],roi[1]:roi[3],:]
+
+
 cam1 = jetCam.jetsonCam()
 cam2 = jetCam.jetsonCam()
 
@@ -62,7 +78,8 @@ num_disp= 16
 # Create a StereoBM object
 stereo = cv2.StereoBM_create(numDisparities=num_disp, blockSize=block_s)
 
-
+print(roi1)
+print(roi2)
 
 
 # Load rectification maps
@@ -74,14 +91,15 @@ while True:
    ret,image_left = cam1.read()
    ret, image_right = cam2.read()
    
-   cv2.imshow('image_left',image_left)
-   cv2.imshow('image_right',image_right)
    # Remap the images using rectification maps
    rectified_left = cv2.remap(image_left, map1_left, map2_left, cv2.INTER_LINEAR)
    rectified_right = cv2.remap(image_right, map1_right, map2_right, cv2.INTER_LINEAR)
+   
+   #rectified_roi = get_combined_roi(roi1,roi2)
 
-   #cv2.imshow('image_left_r',rectified_left)
-   #cv2.imshow('image_right_r',rectified_right)
+   #rectified_left=crop_image(rectified_roi,rectified_left)
+   #rectified_right=crop_image(rectified_roi,rectified_right)
+
    # Convert images to grayscale
    gray_left = cv2.cvtColor(rectified_left, cv2.COLOR_BGR2GRAY)
    gray_right = cv2.cvtColor(rectified_right, cv2.COLOR_BGR2GRAY)
@@ -89,49 +107,34 @@ while True:
    # Compute disparity map
    disparity = stereo.compute(gray_left, gray_right)
    
-   #normalize disparity
-   disaprity_map_norm = cv2.normalize(disparity,None, 0, 255, cv2.NORM_MINMAX)
-   
-   #print(disparity)
-   # Convert disparity to depth (using the formula: depth = baseline * focal_length / disparity)
+   # Normalize the disparity map to the range [0, 1]
+   normalized_disparity_map = cv2.normalize(disparity, None, 0.0, 1.0, cv2.NORM_MINMAX,cv2.CV_32F)
+   #print(normalized_disparity_map.dtype)
+   # Invert the disparity map to get depth values
+   #depth_map = 1.0 / (normalized_disparity_map + 0.001)  # Add a small value to avoid division by zero
+
    baseline = np.linalg.norm(T)  # Magnitude of translation vector
    focal_length = camera_matrix_left[0, 0]  # Focal length (assuming both cameras have the same) in pixels
-   
-   baseline = 0.070   #baseline in meters
-   #focal_length = 3.4  
-   depth_map = (baseline * focal_length) / (disaprity_map_norm + 1e-5) 
 
-   #for HSV spac
-   #normalize depth val to 0-1
-   depth_map_norm = cv2.normalize(depth_map,None, 0, 1, cv2.NORM_MINMAX)  
-    
-   # Choose a colormap (e.g., cv2.COLORMAP_JET, cv2.COLORMAP_VIRIDIS, etc.)
-   colormap = cv2.COLORMAP_HSV
+   #baseline = 70  # Magnitude of translation vector
+   focal_length = camera_matrix_left[0, 0]  # Focal length (assuming both cameras have the same) in pixels
+   depth_map = (baseline * focal_length) / (normalized_disparity_map + 1e-5) 
 
-   # Apply the colormap to the normalized depth map
-   heatmap_depth_map = cv2.applyColorMap(np.uint8(depth_map_norm * 255), colormap) 
+   # Normalize the depth map to a specific range for visualization
+   normalized_depth_map = cv2.normalize(depth_map, None, 0, 1, cv2.NORM_MINMAX)
 
-   #map normalized depth value to Hue vales (0-180 range in opencv)
-   hue_map = np.uint8(depth_map_norm * 180)  
 
-   #set fixed val for saturation and value
-   saturation_map = 255
-   value_map = 255
+   # Apply the heatmap colormap to the normalized depth map
+   heatmap_depth_map = cv2.applyColorMap(np.uint8(normalized_depth_map * 255), cv2.COLORMAP_JET)
 
-   #create HSV image
-   hsv_image = cv2.merge([hue_map, saturation_map * np.ones_like(hue_map), value_map * np.ones_like(hue_map)])
+   # Display or save the heatmap visualization
+   cv2.imshow('Disparity', (normalized_disparity_map*255).astype(np.uint8))
+   cv2.imshow('Depth Map Heatmap', heatmap_depth_map)
+   cv2.imshow('Depth Map contrast', normalized_depth_map)
+   rectified_left  = draw_box(rectified_left,roi1)
+   rectified_right = draw_box(rectified_right,roi2)
 
-   #convert HSV to BGR
-   output_bgr = cv2.cvtColor(hsv_image,cv2.COLOR_HSV2BGR) 
-   cv2.imshow('Depth Map HSV', heatmap_depth_map)   
-
-   #print(focal_length)
-   #print(baseline)
-   #print(depth_map)
-   # Display the depth map
-   cv2.imshow('Depth Map',hue_map )
-   #cv2.imshow('dispar',disparity*100)
-   cv2.imshow('dep',(depth_map *(-100)).astype(np.uint8))
+   cv2.imshow('stereo img', cv2.hconcat([rectified_left,rectified_right]))
    k=cv2.waitKey(10)
    if k == ord('x'):
      break

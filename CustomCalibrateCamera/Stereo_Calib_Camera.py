@@ -14,7 +14,7 @@ import os
 import glob
   
     
-def stereoCalibrateCamera(camera_c1, camera_c2,camera_name,chessboard_box_size=1,chessboard_grid_size=(9,6),number_of_frames=30):
+def stereoCalibrateCamera(camera_c1, camera_c2,camera_name,chessboard_box_size=1,chessboard_grid_size=(9,6),number_of_frames=50):
     
     # Define the dimensions of checkerboard
     CHECKERBOARD = chessboard_grid_size
@@ -114,7 +114,7 @@ def stereoCalibrateCamera(camera_c1, camera_c2,camera_name,chessboard_box_size=1
       
             cv2.imshow('c1_corners',image1)
             cv2.imshow('c2_corners',image2)
-            cv2.waitKey(10)
+            cv2.waitKey(1000)
       
     cv2.destroyAllWindows()
     
