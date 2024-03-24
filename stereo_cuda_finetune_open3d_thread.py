@@ -1,5 +1,7 @@
+import open3d as o3d
 import cv2
 import numpy as np
+
 from matplotlib import pyplot as plt
 from CustomCalibrateCamera.Stereo_Calib_Camera import stereoCalibrateCamera
 from CustomCalibrateCamera.Stereo_Calib_Camera import getStereoCameraParameters, getgetStereoSingleCameraParameters
@@ -40,6 +42,13 @@ def draw_lines(img):
    for i in range(0,img.shape[0],30):
        cv2.line(img,(0,i),(img.shape[1],i),(255,0,0),1)
    return img   
+
+
+def getPoints(points,img_disp,img):
+   points[:,2]=img_disp.flatten()
+   img=img/255
+   colours = np.stack(((img[:,:,2]).flatten(),(img[:,:,1]).flatten(),(img[:,:,0]).flatten()),1)
+   return points, colours
 
 cam1 = jetCam.jetsonCam()
 cam2 = jetCam.jetsonCam()
@@ -94,6 +103,7 @@ else:
   cam2.release()
   exit()
 
+print('here4')
 #stereo rectify
 R1,R2,P1,P2,Q,roi1,roi2= cv2.stereoRectify(camera_matrix_left,dist_coeffs_left, camera_matrix_right, dist_coeffs_right, image_size, R, T)
 
@@ -101,14 +111,77 @@ block_s = 5
 num_disp= 16
 
 # Create a StereoBM object
-stereo = cv2.StereoBM_create(numDisparities=num_disp, blockSize=block_s)
-
-
+#stereo = cv2.StereoBM_create(numDisparities=num_disp, blockSize=block_s)
+stereo = cv2.cuda.createStereoBM(numDisparities=num_disp, blockSize=block_s)
 
 
 # Load rectification maps
 map1_left, map2_left = cv2.initUndistortRectifyMap( camera_matrix_left, dist_coeffs_left, R1, P1, image_size, cv2.CV_16SC2)
 map1_right, map2_right = cv2.initUndistortRectifyMap(camera_matrix_right, dist_coeffs_right, R2, P2, image_size, cv2.CV_16SC2)
+
+# Initialize GPU capture object
+gpu_mat_l = cv2.cuda_GpuMat()
+gpu_mat_r = cv2.cuda_GpuMat()
+
+# Create output disparity map
+gpu_disparity = cv2.cuda_GpuMat()
+
+# Create CUDA stream
+stream = cv2.cuda_Stream()
+
+h,w=image_size[:2]
+
+total_pix=w*h
+points = np.ones((total_pix,3)) *255
+colours= np.ones((total_pix,3))
+#points = np.random.rand(300, 3)
+
+
+
+count = 0
+for i in range(0,w,1):
+  for j in range(0,h,1):
+    if count ==total_pix:
+      break
+    points[count]= [i,j,0 ]
+    count+=1
+
+# Step 2: Convert the NumPy array to an Open3D PointCloud object
+point_cloud = o3d.geometry.PointCloud()
+
+
+point_cloud.points = o3d.utility.Vector3dVector(points)
+#point_cloud.colors = o3d.utility.Vector3dVector(colours)
+# Step 3: Visualize the PointCloud using Open3D's visualization tools
+#o3d.visualization.draw_geometries([point_cloud])
+
+
+import time
+
+vis = o3d.visualization.Visualizer()
+if vis is None:
+  print('vis is none')
+  cam1.stop()
+  cam2.stop()
+  cam1.release()
+  cam2.release()
+  exit()
+
+vis.create_window(
+    window_name='Carla Lidar',
+    width=960,
+    height=540,
+    left=480,
+    top=270)
+vis.get_render_option().background_color = [0.05, 0.05, 0.05]
+vis.get_render_option().point_size = 1
+vis.get_render_option().show_coordinate_frame = True
+
+vis.add_geometry(point_cloud)
+
+frame = 0
+
+
 
 while True:
    # Read stereo images
@@ -119,25 +192,44 @@ while True:
    rectified_left = cv2.remap(image_left, map1_left, map2_left, cv2.INTER_LINEAR)
    rectified_right = cv2.remap(image_right, map1_right, map2_right, cv2.INTER_LINEAR)
 
-    # Convert images to grayscale
-   gray_left = cv2.cvtColor(rectified_left, cv2.COLOR_BGR2GRAY)
-   gray_right = cv2.cvtColor(rectified_right, cv2.COLOR_BGR2GRAY)
+   gpu_mat_l.upload(rectified_left)
+   gpu_mat_r.upload(rectified_right)
+
+   # Convert images to grayscale
+   gray_left = cv2.cuda.cvtColor(gpu_mat_l, cv2.COLOR_BGR2GRAY)
+   gray_right = cv2.cuda.cvtColor(gpu_mat_r, cv2.COLOR_BGR2GRAY)
 
    # Compute disparity map
-   disparity = stereo.compute(gray_left, gray_right)
+   gpu_disparity = stereo.compute(gray_left, gray_right, stream=stream)
+
+   # Download disparity map from GPU to CPU memory
+   disparity = gpu_disparity.download()
 
    # Normalize the disparity map to the range [0, 1]
    normalized_disparity_map = cv2.normalize(disparity, None, 0.0, 1.0, cv2.NORM_MINMAX,cv2.CV_32F)
 
-   
-   blur_disparity = cv2.GaussianBlur(normalized_disparity_map, (5, 5), 0)
 
-   colormap_image = cv2.applyColorMap(np.uint8(blur_disparity * 255), cv2.COLORMAP_JET)
+   colormap_image = cv2.applyColorMap(np.uint8(normalized_disparity_map * 255), cv2.COLORMAP_JET)
+   
+   #print(time.time(),end=' ')
+   points, colours= getPoints(points,normalized_disparity_map*255, colormap_image)
+   #print(time.time(),)
+   #points = np.random.rand(300, 3)
+   point_cloud.points = o3d.utility.Vector3dVector(points)
+   point_cloud.colors = o3d.utility.Vector3dVector(colours)
+   vis.update_geometry(point_cloud)
+   vis.poll_events()
+   vis.update_renderer()
+   # This can fix Open3D jittering issues:
+   time.sleep(0.005)
+
+
    cv2.imshow('Depth colour map',colormap_image )
-   com_img=  cv2.hconcat([gray_left,gray_right])
+   com_img=  cv2.hconcat([rectified_left,rectified_right])
    com_img=draw_lines(com_img)
    cv2.imshow('img_tog',com_img) 
    k=cv2.waitKey(33)
+   
    if k == ord('x'):
      break
    elif k == ord('q'):
