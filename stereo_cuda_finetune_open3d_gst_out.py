@@ -221,14 +221,13 @@ while True:
    vis.poll_events()
    vis.update_renderer()
    # This can fix Open3D jittering issues:
-   #time.sleep(0.005)
-
+   time.sleep(0.005)
 
    cv2.imshow('Depth colour map',colormap_image )
-   com_img=  cv2.hconcat([rectified_left,rectified_right])
-   com_img=draw_lines(com_img)
-   cv2.imshow('img_tog',com_img) 
-   k=cv2.waitKey(1)
+   #com_img=  cv2.hconcat([rectified_left,rectified_right])
+   #com_img=draw_lines(com_img)
+   #cv2.imshow('img_tog',com_img) 
+   k=cv2.waitKey(20)
    
    if k == ord('x'):
      break

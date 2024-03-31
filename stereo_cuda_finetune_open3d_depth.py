@@ -1,6 +1,7 @@
 import open3d as o3d
 import cv2
 import numpy as np
+import math
 
 from matplotlib import pyplot as plt
 from CustomCalibrateCamera.Stereo_Calib_Camera import stereoCalibrateCamera
@@ -206,13 +207,13 @@ while True:
    disparity = gpu_disparity.download()
 
    # Normalize the disparity map to the range [0, 1]
-   normalized_disparity_map = cv2.normalize(disparity, None, 0.0, 1.0, cv2.NORM_MINMAX,cv2.CV_32F)
+   normalized_disparity_map = cv2.normalize(disparity, None, 0.0, 255.00, cv2.NORM_MINMAX,cv2.CV_32F)
 
 
-   colormap_image = cv2.applyColorMap(np.uint8(normalized_disparity_map * 255), cv2.COLORMAP_JET)
+   colormap_image = cv2.applyColorMap(np.uint8(normalized_disparity_map), cv2.COLORMAP_JET)
    
    #print(time.time(),end=' ')
-   points, colours= getPoints(points,normalized_disparity_map*255, colormap_image)
+   points, colours= getPoints(points,normalized_disparity_map, colormap_image)
    #print(time.time(),)
    #points = np.random.rand(300, 3)
    point_cloud.points = o3d.utility.Vector3dVector(points)
@@ -221,14 +222,14 @@ while True:
    vis.poll_events()
    vis.update_renderer()
    # This can fix Open3D jittering issues:
-   #time.sleep(0.005)
+   time.sleep(0.005)
 
 
    cv2.imshow('Depth colour map',colormap_image )
    com_img=  cv2.hconcat([rectified_left,rectified_right])
    com_img=draw_lines(com_img)
    cv2.imshow('img_tog',com_img) 
-   k=cv2.waitKey(1)
+   k=cv2.waitKey(33)
    
    if k == ord('x'):
      break
