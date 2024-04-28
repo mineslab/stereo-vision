@@ -63,12 +63,14 @@ Once the calibration process is complete, the identified intrinsic and extrinsic
 The stereo calibration can be easily done with the script "Stereocalib_jetson_cam.py" in this repository.
 1. Keep your chessboard picture on a flat surface (ensure that the chessboard image is not distorted)
 2. Now start running the script with following command.
-               python3  Stereocalib_jetson_cam.py
-3. Now you should be able to see cam1, cam2 image windows.
-4. Align your camera in such a way that both camera covers the entire chessboard, and keep the camera steady
-5. Then press 'c' key on your keyborad to capture the image.
-6. Change your camera angle and perspective to capture diverse picture of the chessboard and repeat step 4 and 5.
-7. You need to capture minimum 50 images to get better output.
-8. Also ensure that the chessborad area is appearing along the edges of the frame to get better distortion coefficient.
-9. You can press 'x' key in the keyboard to terminate the operation in between.
+
+           python3  Stereocalib_jetson_cam.py
+   
+4. Now you should be able to see cam1, cam2 image windows.
+5. Align your camera in such a way that both camera covers the entire chessboard, and keep the camera steady
+6. Then press 'c' key on your keyborad to capture the image.
+7. Change your camera angle and perspective to capture diverse picture of the chessboard and repeat step 4 and 5.
+8. You need to capture minimum 50 images to get better output.
+9. Also ensure that the chessborad area is appearing along the edges of the frame to get better distortion coefficient.
+10. You can press 'x' key in the keyboard to terminate the operation in between.
 
