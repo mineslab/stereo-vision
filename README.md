@@ -24,7 +24,7 @@ Applications of stereo vision span various fields, including autonomous vehicles
 ### Setting up stereo camera using two raspberry pi V2 8MP cameras.
 Creating a stereo camera using two identical cameras involves setting up the cameras in such a way that they capture images from slightly different viewpoints, mimicking the separation of human eyes. Here's a general outline of how you can do it:
 
-#### Selecting Cameras: 
+#### Selecting Cameras:
 Choose two identical cameras with similar specifications in terms of resolution, frame rate, and lens characteristics. It's essential to ensure that both cameras have a synchronized shutter mechanism to capture images simultaneously.
 #### Mounting the Cameras: 
 Mount the two cameras side by side on a stable platform. The distance between the cameras should approximate the interocular distance of human eyes, typically around 6-7 centimeters.
@@ -41,7 +41,6 @@ Using the calculated disparities, you can reconstruct the depth information of t
 
 ### 2. Calibrating the stereo camera.
 In the stereo camera calibration process, several parameters are identified or determined to ensure accurate reconstruction of 3D scenes from the stereo image pairs. These parameters can be categorized into intrinsic and extrinsic parameters:
-
 #### Intrinsic Parameters: These parameters characterize the internal properties of each camera, including:
 Focal Length (fx, fy): The distance from the camera's optical center to the imaging plane, usually expressed in pixels. 
 Optical Center (cx, cy): The coordinates of the principal point, where the optical axis intersects the imaging plane.
@@ -54,7 +53,5 @@ Stereo Baseline: The distance between the optical centers of the two cameras, wh
 Stereo Alignment: The alignment of the two cameras relative to each other, ensuring that their imaging planes are parallel and their optical axes are properly oriented.
 
 During the calibration process, a set of calibration images containing known calibration patterns (such as chessboard patterns or dot grids) are captured using both cameras. These images are then used to estimate the intrinsic and extrinsic parameters through optimization techniques such as nonlinear least squares optimization.
-
 The calibration algorithm analyzes the correspondences between points on the calibration pattern as seen by both cameras and iteratively adjusts the camera parameters to minimize the reprojection error—the difference between the observed image points and the corresponding points predicted by the calibrated camera model.
-
 Once the calibration process is complete, the identified intrinsic and extrinsic parameters are used to rectify stereo image pairs, undistort images, and compute the disparity map necessary for depth reconstruction in stereo vision applications. Overall, accurate calibration is essential for ensuring precise and reliable depth estimation and 3D reconstruction in stereo camera systems.
