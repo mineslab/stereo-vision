@@ -99,7 +99,7 @@ After running this script two windows appear.
 1. Window shows depth visualization using HSV colourmap/heat map. in which closer object will be red in colour and far objects will be in blue colour.
 2. Window shows images from both cameras, these two images are stereo rectified images hence they are horizontally aligned.
 
-## 5. Stereo depth estimation with cuda acceleration, visualization of depth with point cloud and open3d.
+## 6. Stereo depth estimation with cuda acceleration, visualization of depth with point cloud and open3d.
 In previous steps, we visualized the depth with a 2D image and the depth is represented with the variation in colours. Now we will be visualizing the depth in 3D using open3D module. First the depth data (disparity map) will be converted to point cloud data along with heat map as colours for each point in point cloud. This data will be visualized using open3D.
 
 Run the follwoing command to run stereo depth estimation script with cuda acceleration.
