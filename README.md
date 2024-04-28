@@ -27,14 +27,19 @@ Creating a stereo camera using two identical cameras involves setting up the cam
 1. #### Selecting Cameras: Choose two identical cameras with similar specifications in terms of resolution, frame rate, and lens characteristics. It's essential to ensure that both cameras have a synchronized shutter mechanism to capture images simultaneously.
 2. #### Mounting the Cameras: 
 Mount the two cameras side by side on a stable platform. The distance between the cameras should approximate the interocular distance of human eyes, typically around 6-7 centimeters.
+
 3. #### Calibrating Cameras:
 Calibrate both cameras to ensure that they provide accurate and consistent measurements. Camera calibration involves determining intrinsic parameters (like focal length and lens distortion) and extrinsic parameters (like camera position and orientation).
+
 4. #### Synchronization: 
 Synchronize the shutter triggers of both cameras to capture images simultaneously. This synchronization is crucial for accurate stereo vision, ensuring that the images captured by both cameras correspond to the same instant in time.
+
 5. #### Capturing Images: 
 Configure both cameras to capture images simultaneously. Depending on the cameras you're using, you may need to use software provided by the camera manufacturer or develop your software to control the cameras and capture images.
+
 6. #### Image Processing: 
 Once you have captured images from both cameras, you'll need to process them to extract depth information. This process involves identifying corresponding points in the images (matching features) and calculating the disparity between these points. Various stereo vision algorithms, such as block matching, semi-global matching, or deep learning-based approaches, can be used for this purpose.
+
 7. #### Depth Reconstruction: 
 Using the calculated disparities, you can reconstruct the depth information of the scene. By triangulating corresponding points in the stereo image pairs, you can estimate the distance of objects from the cameras.
 
