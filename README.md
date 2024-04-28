@@ -70,7 +70,13 @@ The stereo calibration can be easily done with the script "Stereocalib_jetson_ca
 5. Align your camera in such a way that both camera covers the entire chessboard, and keep the camera steady
 6. Then press 'c' key on your keyborad to capture the image.
 7. Change your camera angle and perspective to capture diverse picture of the chessboard and repeat step 4 and 5.
-8. You need to capture minimum 50 images to get better output.
+8. You need to capture 50 images to get better output.
 9. Also ensure that the chessborad area is appearing along the edges of the frame to get better distortion coefficient.
-10. You can press 'x' key in the keyboard to terminate the operation in between.
+10. After capturing 50 images, the windows will disappear and the calibration process start. The process takes around 1 minute to complete.
+11. The calibration data will be stored in the current repository as np zip files as follows.
+    * jetson_stereo_8MP.npz
+    * jetson_stereo_8MPc1.npz
+    * jetson_stereo_8MPc2.npz    
+13. You can press 'x' key in the keyboard to terminate the operation in between.
+14. This generated data will be used in next steps for depth estimation.
 
