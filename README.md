@@ -59,3 +59,16 @@ In the stereo camera calibration process, several parameters are identified or d
 During the calibration process, a set of calibration images containing known calibration patterns (such as chessboard patterns or dot grids) are captured using both cameras. These images are then used to estimate the intrinsic and extrinsic parameters through optimization techniques such as nonlinear least squares optimization.
 The calibration algorithm analyzes the correspondences between points on the calibration pattern as seen by both cameras and iteratively adjusts the camera parameters to minimize the reprojection error—the difference between the observed image points and the corresponding points predicted by the calibrated camera model.
 Once the calibration process is complete, the identified intrinsic and extrinsic parameters are used to rectify stereo image pairs, undistort images, and compute the disparity map necessary for depth reconstruction in stereo vision applications. Overall, accurate calibration is essential for ensuring precise and reliable depth estimation and 3D reconstruction in stereo camera systems.
+
+The stereo calibration can be easily done with the script "Stereocalib_jetson_cam.py" in this repository.
+1. Keep your chessboard picture on a flat surface (ensure that the chessboard image is not distorted)
+2. Now start running the script with following command.
+               python3  Stereocalib_jetson_cam.py
+3. Now you should be able to see cam1, cam2 image windows.
+4. Align your camera in such a way that both camera covers the entire chessboard, and keep the camera steady
+5. Then press 'c' key on your keyborad to capture the image.
+6. Change your camera angle and perspective to capture diverse picture of the chessboard and repeat step 4 and 5.
+7. You need to capture minimum 50 images to get better output.
+8. Also ensure that the chessborad area is appearing along the edges of the frame to get better distortion coefficient.
+9. You can press 'x' key in the keyboard to terminate the operation in between.
+
