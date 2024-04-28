@@ -7,24 +7,11 @@ Stereo vision, often referred to as stereopsis, is a remarkable aspect of human 
 This phenomenon is crucial for tasks such as depth perception, object recognition, and spatial awareness. In technology, stereo vision is mimicked through stereo cameras or sensor arrays, which capture images or data from two slightly different viewpoints, akin to human eyes. By analyzing the disparities between these viewpoints, algorithms can calculate depth information, enabling machines to perceive and understand the three-dimensional structure of the world around them.
 Applications of stereo vision span various fields, including autonomous vehicles, robotics, augmented reality, medical imaging, and surveillance systems. Its ability to accurately perceive depth makes it a powerful tool for tasks that require spatial understanding and interaction with the physical world. As technology advances, stereo vision continues to play a pivotal role in enhancing machine perception and enabling intelligent systems to operate more effectively in complex environments.
 
-## Steps involved
-1. Required hardwares.
-2. Setting up stereo camera using two raspberry pi V2 8MP cameras.
-3. Calibrating the stereo camera.
-4. Stereo depth estimation with cpu, visualization of depth with heat map.
-5. Stereo depth estimation with cuda acceleration, visualization of depth with heat map.
-6. Stereo depth estimation with cuda acceleration, visualization of depth with point cloud and open3d.
-
-### 1. Required hardwares.
-1. Jetson nano B01 developement board.
-2. Two raspberry pi V2 camera (8MP sony IMX219 sensor)
-3. 64gb memorycard with jetson OS installed
-4. 5A 5V power supply (The stable power supply is important when utilizing cuda for both opencv and open3d, otherwise jetson board turn off automatically due to volatge drop caused by increased current consumption )
-
-### Setting up stereo camera using two raspberry pi V2 8MP cameras.
 Creating a stereo camera using two identical cameras involves setting up the cameras in such a way that they capture images from slightly different viewpoints, mimicking the separation of human eyes. Here's a general outline of how you can do it:
 
-1. #### Selecting Cameras: Choose two identical cameras with similar specifications in terms of resolution, frame rate, and lens characteristics. It's essential to ensure that both cameras have a synchronized shutter mechanism to capture images simultaneously.
+1. #### Selecting Cameras:
+Choose two identical cameras with similar specifications in terms of resolution, frame rate, and lens characteristics. It's essential to ensure that both cameras have a synchronized shutter mechanism to capture images simultaneously.
+
 2. #### Mounting the Cameras: 
 Mount the two cameras side by side on a stable platform. The distance between the cameras should approximate the interocular distance of human eyes, typically around 6-7 centimeters.
 
@@ -42,6 +29,29 @@ Once you have captured images from both cameras, you'll need to process them to 
 
 7. #### Depth Reconstruction: 
 Using the calculated disparities, you can reconstruct the depth information of the scene. By triangulating corresponding points in the stereo image pairs, you can estimate the distance of objects from the cameras.
+
+## Steps involved
+1. Required hardwares.
+2. Setting up stereo camera using two raspberry pi V2 8MP cameras.
+3. Calibrating the stereo camera.
+4. Stereo depth estimation with cpu, visualization of depth with heat map.
+5. Stereo depth estimation with cuda acceleration, visualization of depth with heat map.
+6. Stereo depth estimation with cuda acceleration, visualization of depth with point cloud and open3d.
+
+### 1. Required hardwares.
+1. Jetson nano B01 developement board.
+2. Two raspberry pi V2 camera (8MP sony IMX219 sensor)
+3. 64gb memorycard with jetson OS installed
+4. 5A 5V power supply (The stable power supply is important when utilizing cuda for both opencv and open3d, otherwise jetson board turn off automatically due to volatge drop caused by increased current consumption )
+
+### Setting up stereo camera using two raspberry pi V2 8MP cameras.
+Creating a stereo camera using two identical cameras involves setting up the cameras in such a way that they capture images from slightly different viewpoints, mimicking the separation of human eyes. Here's a general outline of how you can do it:
+
+1. #### Selecting Cameras:
+Choose two identical cameras with similar specifications in terms of resolution, frame rate, and lens characteristics. It's essential to ensure that both cameras have a synchronized shutter mechanism to capture images simultaneously. In this project we are using two raspberry pi v2 camera (SONY IMX219 sensor) 
+
+2. #### Mounting the Cameras: 
+Mount the two cameras side by side on a stable platform. The distance between the cameras should approximate the interocular distance of human eyes, typically around 6-7 centimeters.
 
 ### 2. Calibrating the stereo camera.
 In the stereo camera calibration process, several parameters are identified or determined to ensure accurate reconstruction of 3D scenes from the stereo image pairs. These parameters can be categorized into intrinsic and extrinsic parameters:
