@@ -43,7 +43,7 @@ Using the calculated disparities, you can reconstruct the depth information of t
 In the stereo camera calibration process, several parameters are identified or determined to ensure accurate reconstruction of 3D scenes from the stereo image pairs. These parameters can be categorized into intrinsic and extrinsic parameters:
 
 #### Intrinsic Parameters: These parameters characterize the internal properties of each camera, including:
-Focal Length (fx, fy): The distance from the camera's optical center to the imaging plane, usually expressed in pixels.
+Focal Length (fx, fy): The distance from the camera's optical center to the imaging plane, usually expressed in pixels. 
 Optical Center (cx, cy): The coordinates of the principal point, where the optical axis intersects the imaging plane.
 Lens Distortion: Distortions caused by imperfections in the camera lens, typically modeled using radial and tangential distortion coefficients.
 Image Sensor Format: The physical dimensions of the camera's image sensor, which affect the field of view and image distortion.
@@ -52,6 +52,7 @@ Rotation Matrix (R): Describes the rotation of one camera relative to the other.
 Translation Vector (T): Represents the translation of one camera relative to the other in 3D space.
 Stereo Baseline: The distance between the optical centers of the two cameras, which affects the depth perception capability.
 Stereo Alignment: The alignment of the two cameras relative to each other, ensuring that their imaging planes are parallel and their optical axes are properly oriented.
+
 During the calibration process, a set of calibration images containing known calibration patterns (such as chessboard patterns or dot grids) are captured using both cameras. These images are then used to estimate the intrinsic and extrinsic parameters through optimization techniques such as nonlinear least squares optimization.
 
 The calibration algorithm analyzes the correspondences between points on the calibration pattern as seen by both cameras and iteratively adjusts the camera parameters to minimize the reprojection error—the difference between the observed image points and the corresponding points predicted by the calibrated camera model.
