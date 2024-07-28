@@ -47,6 +47,7 @@ Creating a stereo camera using two identical cameras involves setting up the cam
   Basically we need to install the following packages for this project.
   1. OpenCV : for all image processing and 2D visulaization.
   2. Ope3D :for3D visulaization.
+     
  Please follow the the following repository for setting up python3.8 environment with opencv and open3d.
   https://github.com/asujaykk/Install-Opencv-and-open3D-in-Jetson-nano-with-cuda-support.git
 
