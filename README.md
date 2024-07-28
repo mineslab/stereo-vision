@@ -69,25 +69,30 @@ During the calibration process, a set of calibration images containing known cal
 The calibration algorithm analyzes the correspondences between points on the calibration pattern as seen by both cameras and iteratively adjusts the camera parameters to minimize the reprojection error—the difference between the observed image points and the corresponding points predicted by the calibrated camera model.
 Once the calibration process is complete, the identified intrinsic and extrinsic parameters are used to rectify stereo image pairs, undistort images, and compute the disparity map necessary for depth reconstruction in stereo vision applications. Overall, accurate calibration is essential for ensuring precise and reliable depth estimation and 3D reconstruction in stereo camera systems.
 
+#### Stereco calibration procedure.
 The stereo calibration can be easily done with the script "Stereocalib_jetson_cam.py" in this repository.
 1. Keep your chessboard picture on a flat surface (ensure that the chessboard image is not distorted)
-2. Now start running the script with following command.
+2. Clone this repository to your working directory.
+
+       git clone https://github.com/asujaykk/Stereo-Camera-Depth-Estimation-And-3D-visulaization-on-jetson-nano.git
+4. Activatethe the python virtual environment where you installed opencv and open3d.
+6. Now run the 'Stereocalib_jetson_cam.py' python script with following command.
 
            python3  Stereocalib_jetson_cam.py
    
-4. Now you should be able to see cam1, cam2 image windows.
-5. Align your camera in such a way that both camera covers the entire chessboard, and keep the camera steady
-6. Then press 'c' key on your keyborad to capture the image.
-7. Change your camera angle and perspective to capture diverse picture of the chessboard and repeat step 4 and 5.
-8. You need to capture 50 images to get better output.
-9. Also ensure that the chessborad area is appearing along the edges of the frame to get better distortion coefficient.
-10. After capturing 50 images, the windows will disappear and the calibration process start. The process takes around 1 minute to complete.
-11. The calibration data will be stored in the current repository as np zip files as follows.
+7. Now you should be able to see left cam1, right cam2 image in a window.
+8. Align your camera in such a way that both camera covers the entire chessboard, and keep the camera steady
+9. Then press 'c' key on your keyborad to capture the image.
+10. Change your camera angle and perspective to capture diverse picture of the chessboard and repeat step 4 and 5.
+11. You need to capture 50 images to get better output.
+12. Also ensure that the chessborad area is appearing along the edges of the frame to get better distortion coefficient.
+13. After capturing 50 images, the windows will disappear and the calibration process start. The process takes around 1 minute to complete.
+14. The calibration data will be stored in the current repository as np zip files as follows.
     * jetson_stereo_8MP.npz
     * jetson_stereo_8MPc1.npz
     * jetson_stereo_8MPc2.npz    
-13. You can press 'x' key in the keyboard to terminate the operation in between.
-14. This generated data will be used in next steps for depth estimation.
+15. You can press 'x' key in the keyboard to terminate the operation in between.
+16. This generated data will be used in next steps for depth estimation.
 
 ## 4. Stereo depth estimation with cpu, visualization of depth with heat map.
 Once you have captured images from both cameras, you'll need to process them to extract depth information. This process involves identifying corresponding points in the images (matching features) and calculating the disparity between these points. Various stereo vision algorithms, such as block matching, semi-global matching, or deep learning-based approaches, can be used for this purpose.
