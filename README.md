@@ -26,10 +26,11 @@ Creating a stereo camera using two identical cameras involves setting up the cam
 ## Steps involved
 1. Required hardwares.
 2. Setting up stereo camera using two raspberry pi V2 8MP cameras.
-3. Calibrating the stereo camera.
-4. Stereo depth estimation with cpu, visualization of depth with heat map.
-5. Stereo depth estimation with cuda acceleration, visualization of depth with heat map.
-6. Stereo depth estimation with cuda acceleration, visualization of depth with point cloud and open3d.
+3. Setting up the environment.
+4. Calibrating the stereo camera.
+5. Stereo depth estimation with cpu, visualization of depth with heat map.
+6. Stereo depth estimation with cuda acceleration, visualization of depth with heat map.
+7. Stereo depth estimation with cuda acceleration, visualization of depth with point cloud and open3d.
 
 ### 1. Required hardwares.
 1. Jetson nano B01 developement board.
@@ -42,8 +43,15 @@ Creating a stereo camera using two identical cameras involves setting up the cam
 
 1. Selecting Cameras: Choose two identical cameras with similar specifications in terms of resolution, frame rate, and lens characteristics. It's essential to ensure that both cameras have a synchronized shutter mechanism to capture images simultaneously. In this project we are using two raspberry pi v2 camera (SONY IMX219 sensor)
 2. Mounting the Cameras: Mount the two cameras side by side on a stable platform. The distance between the cameras should approximate the interocular distance of human eyes, typically around 6-7 centimeters.
+### 3. Setting up the environment.
+  Basically we need to install the following packages for this project.
+  1. OpenCV : for all image processing and 2D visulaization.
+  2. Ope3D :for3D visulaization.
+ Please follow the the following repository for setting up python3.8 environment with opencv and open3d.
+  https://github.com/asujaykk/Install-Opencv-and-open3D-in-Jetson-nano-with-cuda-support.git
 
-### 3. Calibrating the stereo camera.
+   
+### 4. Calibrating the stereo camera.
 In the stereo camera calibration process, several parameters are identified or determined to ensure accurate reconstruction of 3D scenes from the stereo image pairs. These parameters can be categorized into intrinsic and extrinsic parameters:
 #### Intrinsic Parameters: These parameters characterize the internal properties of each camera, including:
 1. Focal Length (fx, fy): The distance from the camera's optical center to the imaging plane, usually expressed in pixels. 
