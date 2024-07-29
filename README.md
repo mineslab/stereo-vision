@@ -105,6 +105,9 @@ Run the follwoing command to run stereo depth estimation script on cpu alone.
 After running this script two windows appear.
 1. Window shows depth visualization using HSV colourmap/heat map. in which closer object will be red in colour and far objects will be in blue colour.
 2. Window shows images from both cameras, these two images are stereo rectified images hence they are horizontally aligned.
+3. Fine tune the 'block size' of disparity calculator algorithm using the keys 'q' (for increasing block size) and 'a' (for decreasing block size).
+4. Fine tune the minimum disaprity' of disparity calculator algorithm using the keys 'w' (for increasing ) and 's' (for decreasing ).
+5. The updated values will be printed on the console.
 
 ## 5. Stereo depth estimation with cuda acceleration, visualization of depth with heat map.
 The stereo depth estimation is a bit slow process, hence utilizing cuda support will increase the speed the process. Here we build opencv with cuda support and we will utilize opencv cuda module to perform stereo matching to speed up the process.
@@ -116,6 +119,9 @@ Run the follwoing command to run stereo depth estimation script with cuda accele
 After running this script two windows appear.
 1. Window shows depth visualization using HSV colourmap/heat map. in which closer object will be red in colour and far objects will be in blue colour.
 2. Window shows images from both cameras, these two images are stereo rectified images hence they are horizontally aligned.
+3. Fine tune the 'block size' of disparity calculator algorithm using the keys 'q' (for increasing block size) and 'a' (for decreasing block size).
+4. Fine tune the minimum disaprity' of disparity calculator algorithm using the keys 'w' (for increasing ) and 's' (for decreasing ).
+5. The updated values will be printed on the console.
 
 ## 6. Stereo depth estimation with cuda acceleration, visualization of depth with point cloud and open3d.
 In previous steps, we visualized the depth with a 2D image and the depth is represented with the variation in colours. Now we will be visualizing the depth in 3D using open3D module. First the depth data (disparity map) will be converted to point cloud data along with heat map as colours for each point in point cloud. This data will be visualized using open3D.
@@ -127,3 +133,6 @@ Run the follwoing command to run stereo depth estimation script with cuda accele
 After running this script two windows appear.
 1. Window shows 3D depth visualization using open3D. in which closer object will be red in colour and far objects will be in blue colour.
 2. Window shows images from both cameras, these two images are stereo rectified images hence they are horizontally aligned.
+3. Fine tune the 'block size' of disparity calculator algorithm using the keys 'q' (for increasing block size) and 'a' (for decreasing block size).
+4. Fine tune the minimum disaprity' of disparity calculator algorithm using the keys 'w' (for increasing ) and 's' (for decreasing ).
+5. The updated values will be printed on the console.
