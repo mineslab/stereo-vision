@@ -15,7 +15,8 @@ import glob
   
     
 def stereoCalibrateCamera(camera_c1, camera_c2,camera_name,chessboard_box_size=1,chessboard_grid_size=(9,6),number_of_frames=50):
-    
+
+
     # Define the dimensions of checkerboard
     CHECKERBOARD = chessboard_grid_size
     
@@ -50,13 +51,16 @@ def stereoCalibrateCamera(camera_c1, camera_c2,camera_name,chessboard_box_size=1
 
     img_list_c1 =[] 
     img_list_c2 =[] 
-    print("Align camera properly.. and press 'c' to capture")
+    print("Align camera properly.. and \n press 'c' to capture\npress 'x' to abort operation")
     img_count=0
     while img_count<number_of_frames:
         dat1_rcved, img1 = camera_c1.read()  
         dat2_rcved, img2 = camera_c2.read()      
-        cv2.imshow('img_c1',img1)
-        cv2.imshow('img_c2',img2)
+        #cv2.imshow('img_c1',img1)
+        #cv2.imshow('img_c2',img2)
+        img1_r= cv2.resize(img1, (0,0), fx=0.6, fy=0.6)
+        img2_r=cv2.resize(img2, (0,0), fx=0.6, fy=0.6)
+        cv2.imshow("camera left - camera right",cv2.hconcat([img1_r ,img2_r]))
         k = cv2.waitKey(10) & 0xFF
         if k == ord('c'):
             img_list_c1.append(img1)
@@ -112,9 +116,10 @@ def stereoCalibrateCamera(camera_c1, camera_c2,camera_name,chessboard_box_size=1
                                               CHECKERBOARD, 
                                               cornersf_2, ret2)
       
-            cv2.imshow('c1_corners',image1)
-            cv2.imshow('c2_corners',image2)
-            cv2.waitKey(1000)
+            #cv2.imshow('c1_corners',image1)
+            #cv2.imshow('c2_corners',image2)
+            cv2.imshow("img1 corners - img2 corners",cv2.hconcat([cv2.resize(image1, (0,0), fx=0.6, fy=0.6) ,cv2.resize(image2, (0,0), fx=0.6, fy=0.6)]))
+            cv2.waitKey(10)
       
     cv2.destroyAllWindows()
     
@@ -141,12 +146,13 @@ def stereoCalibrateCamera(camera_c1, camera_c2,camera_name,chessboard_box_size=1
     np.savez(camera_name+".npz", k1=k1,d1=d1,k2=k2,d2=d2,SR=R,ST=T)    
         
 
-
+#utility funtion to extract the camera parameters from the zip file.
 def getStereoCameraParameters(file_name):
     loaded_data = np.load(file_name)
     return loaded_data['k1'], loaded_data['d1'], loaded_data['k2'],loaded_data['d2'], loaded_data['SR'],loaded_data['ST']
 
-def getgetStereoSingleCameraParameters(file_name):
+#utility funtion to extract the individual camera parameters from the zip file.
+def getStereoSingleCameraParameters(file_name):
     loaded_data = np.load(file_name)
     return loaded_data['k'], loaded_data['d'], loaded_data['r'],loaded_data['t']
 
