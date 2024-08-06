@@ -194,10 +194,11 @@ while True:
    #time.sleep(0.005)
 
 
-   cv2.imshow('Depth colour map',colormap_image )
+   #cv2.imshow('Depth colour map',colormap_image )
    com_img=  cv2.hconcat([rectified_left,rectified_right])
    com_img=draw_lines(com_img)
-   cv2.imshow('img_tog',com_img) 
+   #cv2.imshow('img_tog',com_img) 
+   cv2.imshow('img left - img right - depth map',cv2.hconcat([cv2.resize(com_img, (0,0), fx=0.6, fy=0.6),cv2.resize(colormap_image, (0,0), fx=0.6, fy=0.6)]))
    k=cv2.waitKey(1)
    
    if k == ord('x'):
