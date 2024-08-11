@@ -1,4 +1,4 @@
-![Screenshot from 2024-08-11 14-23-48](https://github.com/user-attachments/assets/caf62862-86c2-43b1-a659-af6dd3dcf589)![GIF_20240810_103613_670](https://github.com/user-attachments/assets/584d7d66-7a5c-4d2d-a421-b59f84f01ae9)# Stereo camera depth estimation and Visualization using open3D with cuda support on Jetson Nano
+# Stereo camera depth estimation and Visualization using open3D with cuda support on Jetson Nano
 Brief: Stereo vision based depth estimation with opencv and jetson nano with cuda support and visualization with point cloud and open3d
 
 ## Stereo vision
@@ -148,7 +148,9 @@ After running this script two windows appear.
 
 ![GIF_20240810_103613_670](https://github.com/user-attachments/assets/acf38f9d-545f-4a9f-9c9d-b577ef169c6c)
 
+
 ## 7. Video Tutorial - Youtube
+
 
 ![Screenshot from 2024-08-11 14-23-48](https://github.com/user-attachments/assets/350dce35-4adf-4ddf-b0a4-9224d5b1b758)
 
