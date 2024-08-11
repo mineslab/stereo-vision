@@ -1,4 +1,4 @@
-![GIF_20240810_103613_670](https://github.com/user-attachments/assets/584d7d66-7a5c-4d2d-a421-b59f84f01ae9)# Stereo camera depth estimation and Visualization using open3D with cuda support on Jetson Nano
+![Screenshot from 2024-08-11 14-23-48](https://github.com/user-attachments/assets/caf62862-86c2-43b1-a659-af6dd3dcf589)![GIF_20240810_103613_670](https://github.com/user-attachments/assets/584d7d66-7a5c-4d2d-a421-b59f84f01ae9)# Stereo camera depth estimation and Visualization using open3D with cuda support on Jetson Nano
 Brief: Stereo vision based depth estimation with opencv and jetson nano with cuda support and visualization with point cloud and open3d
 
 ## Stereo vision
@@ -109,6 +109,7 @@ After running this script two windows appear.
 4. Fine tune the minimum disaprity' of disparity calculator algorithm using the keys 'w' (for increasing ) and 's' (for decreasing ).
 5. The updated values will be printed on the console.
 6. Please find the visualization below
+   
    ![GIF_20240810_102843_025](https://github.com/user-attachments/assets/34865ca6-8edd-43e7-bcd3-eb6994fc8958)
 
 
@@ -127,6 +128,7 @@ After running this script two windows appear.
 4. Fine tune the minimum disaprity' of disparity calculator algorithm using the keys 'w' (for increasing ) and 's' (for decreasing ).
 5. The updated values will be printed on the console.
 6. Please find the visualization below
+
 ![GIF_20240810_103319_574](https://github.com/user-attachments/assets/cb065969-eebd-4e49-b011-a7c7870a17fc)
 
 ## 6. Stereo depth estimation with cuda acceleration, visualization of depth with point cloud and open3d.
@@ -142,10 +144,14 @@ After running this script two windows appear.
 3. Fine tune the 'block size' of disparity calculator algorithm using the keys 'q' (for increasing block size) and 'a' (for decreasing block size).
 4. Fine tune the minimum disaprity' of disparity calculator algorithm using the keys 'w' (for increasing ) and 's' (for decreasing ).
 5. The updated values will be printed on the console.
-6. Please find the visualization below 
+6. Please find the visualization below
+
 ![GIF_20240810_103613_670](https://github.com/user-attachments/assets/acf38f9d-545f-4a9f-9c9d-b577ef169c6c)
 
 ## 7. Video Tutorial - Youtube
+
+![Screenshot from 2024-08-11 14-23-48](https://github.com/user-attachments/assets/350dce35-4adf-4ddf-b0a4-9224d5b1b758)
+
 
 https://youtube.com/playlist?list=PLxyLL5ujlHIptOzd2P0mK2HDo-Ll4QHR4&si=X_r60JDBVdmYubsa
 
