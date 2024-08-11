@@ -1,4 +1,4 @@
-# Stereo camera depth estimation and Visualization using open3D with cuda support on Jetson Nano
+![GIF_20240810_103613_670](https://github.com/user-attachments/assets/584d7d66-7a5c-4d2d-a421-b59f84f01ae9)# Stereo camera depth estimation and Visualization using open3D with cuda support on Jetson Nano
 Brief: Stereo vision based depth estimation with opencv and jetson nano with cuda support and visualization with point cloud and open3d
 
 ## Stereo vision
@@ -108,6 +108,10 @@ After running this script two windows appear.
 3. Fine tune the 'block size' of disparity calculator algorithm using the keys 'q' (for increasing block size) and 'a' (for decreasing block size).
 4. Fine tune the minimum disaprity' of disparity calculator algorithm using the keys 'w' (for increasing ) and 's' (for decreasing ).
 5. The updated values will be printed on the console.
+6. Please find the visualization below
+   ![GIF_20240810_102843_025](https://github.com/user-attachments/assets/34865ca6-8edd-43e7-bcd3-eb6994fc8958)
+
+
 
 ## 5. Stereo depth estimation with cuda acceleration, visualization of depth with heat map.
 The stereo depth estimation is a bit slow process, hence utilizing cuda support will increase the speed the process. Here we build opencv with cuda support and we will utilize opencv cuda module to perform stereo matching to speed up the process.
@@ -122,6 +126,8 @@ After running this script two windows appear.
 3. Fine tune the 'block size' of disparity calculator algorithm using the keys 'q' (for increasing block size) and 'a' (for decreasing block size).
 4. Fine tune the minimum disaprity' of disparity calculator algorithm using the keys 'w' (for increasing ) and 's' (for decreasing ).
 5. The updated values will be printed on the console.
+6. Please find the visualization below
+![GIF_20240810_103319_574](https://github.com/user-attachments/assets/cb065969-eebd-4e49-b011-a7c7870a17fc)
 
 ## 6. Stereo depth estimation with cuda acceleration, visualization of depth with point cloud and open3d.
 In previous steps, we visualized the depth with a 2D image and the depth is represented with the variation in colours. Now we will be visualizing the depth in 3D using open3D module. First the depth data (disparity map) will be converted to point cloud data along with heat map as colours for each point in point cloud. This data will be visualized using open3D.
@@ -136,3 +142,10 @@ After running this script two windows appear.
 3. Fine tune the 'block size' of disparity calculator algorithm using the keys 'q' (for increasing block size) and 'a' (for decreasing block size).
 4. Fine tune the minimum disaprity' of disparity calculator algorithm using the keys 'w' (for increasing ) and 's' (for decreasing ).
 5. The updated values will be printed on the console.
+6. Please find the visualization below 
+![GIF_20240810_103613_670](https://github.com/user-attachments/assets/acf38f9d-545f-4a9f-9c9d-b577ef169c6c)
+
+## 7. Video Tutorial - Youtube
+
+https://youtube.com/playlist?list=PLxyLL5ujlHIptOzd2P0mK2HDo-Ll4QHR4&si=X_r60JDBVdmYubsa
+
