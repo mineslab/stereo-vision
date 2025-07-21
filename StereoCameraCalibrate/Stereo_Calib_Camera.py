@@ -137,8 +137,8 @@ def stereoCalibrateCamera(camera_c1, camera_c2,camera_name,chessboard_box_size=1
     ret_2, k2, d2, r_2, t_2 = cv2.calibrateCamera(
         threedpoints, twodpoints_c2,(width, height), None, None)
 
-    np.savez(camera_name+"c1.npz", k=k1,d=d1,r=r_1,t=t_1)
-    np.savez(camera_name+"c2.npz", k=k2,d=d2,r=r_2,t=t_2)
+    np.savez(camera_name+"_c1.npz", k=k1,d=d1,r=r_1,t=t_1)
+    np.savez(camera_name+"_c2.npz", k=k2,d=d2,r=r_2,t=t_2)
     
     ret, CM1, dist1, CM2, dist2, R, T, E, F = cv2.stereoCalibrate(threedpoints, twodpoints_c1, twodpoints_c2, k1, d1,
                                                                  k2, d2, (width, height), criteria = criteria, flags =   stereocalibration_flags)
